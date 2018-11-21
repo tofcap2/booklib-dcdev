@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,22 @@ class Author
      */
     private $lastname;
 
+    /**
+     * @var Collection $books
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Book", mappedBy="author")
+     */
+    private $books;
+
+    /**
+     * Author constructor.
+     */
+    public function __construct()
+    {
+        $this->books = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -64,5 +82,16 @@ class Author
         return $this;
     }
 
+    /**
+     * @return Collection
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
+    }
 
+    public function getFullName(): string
+    {
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
 }

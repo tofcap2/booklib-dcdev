@@ -2,21 +2,37 @@
 
 namespace App\Controller;
 
-use App\DataFixtures\AuthorFixtures;
 use App\Entity\Author;
-use App\Entity\Category;
+use App\Entity\Book;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class DefaultController
+ * @package App\Controller
+ * @Route("/default")
+ */
 class DefaultController extends BaseController
 {
     /**
-     * @Route("/default/{nom}", name="default")
+     * @Route("/{nom}", name="default", methods={"GET"})
      */
-    public function index(string $nom)
+    public function index(string $nom, Request $request)
     {
         $author = $this->getDoctrine()->getRepository(Author::class)->findOneBy(["lastname" => $nom]);
 
-        return new Response($author->getFirstname() . " " . $author->getLastname());
+        if(!$author){
+            throw $this->createNotFoundException("Auteur introuvable!");
+        }
+
+        return $this->render("default/index.html.twig", ["author" => $author]);
+    }
+    /**
+     * @Route("/book/{slug}", name="show-book")
+     */
+    public function showBook(Book $book)
+    {
+        return new Response($book->getTitle());
     }
 }
