@@ -4,19 +4,33 @@
 {% endblock %}
 
 {% block body %}
-    <h1>{{ book.title }}</h1>
+    <section class="container">
+        <h1>{{ book.title }}</h1>
 
-    <p>{{ book.author.fullName }}</p>
+        <img src="{{ asset('uploads/' ~ book.image) }}" alt="{{ book.title }}">
 
-    <ul>
-        {% for category in book.category %}
-        <li>
-            <a href="{{path("category_show", {"id": category.id})}}">
-                {{ category.name }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
+        <p>{{ book.author.fullName }}</p>
 
+        <ul>
+            {% for category in book.category %}
+                <li>
+                    <a href="{{ path("category_show", {"id": category.id}) }}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Liste des livres du meme auteur</h2>
+        <div class="row">
+            {% for otherbook in otherbooks %}
+                <div class="col-md-2">
+                    {% include 'book/card.html.twig' with {'book' : otherbook} only %}
+                </div>
+            {% else %}
+                <li>Aucun autre livre</li>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
 
