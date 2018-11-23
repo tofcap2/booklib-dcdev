@@ -3,8 +3,7 @@
     <div class="card-body">
         <h3>{{ book.title }}</h3>
         <div class="book-infos">
-                                        <span class="label label-info"><i
-                                                    class="fa fa-user"></i>{{ book.author.fullname }}</span>
+            <span class="label label-info"><i class="fa fa-user"></i>{{ book.author.fullname }}</span>
             {% for category in book.category %}
                 <span class="label label-success"><i class="fa fa-tag"></i>{{ category.name }}</span>
             {% endfor %}
