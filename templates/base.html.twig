@@ -39,9 +39,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('author_new') }}">Ajouter un auteur</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('box_index') }}">Afficher les boites</a>
-                        </li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('box_index') }}">
+                                    Afficher les boites
+                                </a>
+                            </li>
+                        {% endif %}
+
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
